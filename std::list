@@ -1,0 +1,340 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <list>
+#include <chrono>
+#include <numeric>
+#include <string>
+#include <functional>
+
+using namespace std;
+using namespace std::chrono;
+
+int main()
+{
+int i =0;
+int num = 501;
+while(i<num){
+
+
+    list<int>list1;
+    list<int>list2;
+    list<int>list3;
+    list<int>list4;
+    list<int>list51;
+    list<int>list52;
+
+    ifstream plik1;
+    plik1.open( "l1.txt" );
+    if(!plik1.good())
+        return false;
+
+    string wiersz1;
+    while(getline(plik1, wiersz1))
+        list1.push_front(stoi(wiersz1));
+    plik1.close();
+
+    ifstream plik2;
+    plik2.open( "l2.txt" );
+    if( !plik2.good() )
+        return false;
+
+    string wiersz2;
+    while( getline( plik2, wiersz2 ) )
+        list2.push_front(stoi(wiersz2));
+    plik2.close();
+
+    ifstream plik3;
+    plik3.open( "l1.txt" );
+    if(!plik3.good())
+        return false;
+
+    string wiersz3;
+    while(getline(plik3, wiersz3))
+        list3.push_front(stoi(wiersz3));
+    plik3.close();
+
+    ifstream plik4;
+    plik4.open( "l2.txt" );
+    if( !plik4.good() )
+        return false;
+
+    string wiersz4;
+    while( getline( plik4, wiersz4 ) )
+        list4.push_front(stoi(wiersz4));
+    plik4.close();
+
+    ifstream plik51;
+    plik51.open( "l1.txt" );
+    if(!plik51.good())
+        return false;
+
+    string wiersz51;
+    while(getline(plik51, wiersz51))
+        list51.push_front(stoi(wiersz51));
+    plik51.close();
+
+    ifstream plik52;
+    plik52.open( "l2.txt" );
+    if( !plik52.good() )
+        return false;
+
+    string wiersz52;
+    while( getline( plik52, wiersz52 ) )
+        list52.push_front(stoi(wiersz52));
+    plik52.close();
+
+
+
+    ofstream file_l1_sort;
+    file_l1_sort.open("Sort_list1_output.txt");
+
+    auto start_sort_1 = steady_clock::now();
+    list1.sort();
+    auto stop_sort_1 = steady_clock::now();
+
+    for(list<int>::iterator i = list1.begin(); i != list1.end(); ++i)
+        file_l1_sort << *i << " ";
+
+    auto duration_sort_L1 = duration_cast<microseconds>(stop_sort_1 - start_sort_1);
+
+    ofstream file_l2_sort;
+    file_l2_sort.open("Sort_list2_output.txt");
+
+    auto start_sort_2 = steady_clock::now();
+    list2.sort();
+    auto stop_sort_2 = steady_clock::now();
+
+    for(list<int>::iterator i = list2.begin(); i != list2.end(); ++i)
+        file_l2_sort << *i << " ";
+    auto duration_sort_2 = duration_cast<microseconds>(stop_sort_2 - start_sort_2);
+
+
+    ofstream file_l1_sort_rev_sorted;
+    file_l1_sort_rev_sorted.open("Reverse_sort_list1_sorted.txt");
+
+    auto start_reverse_1_sorted = steady_clock::now();
+    list1.reverse();
+    auto stop_reverse_1_sorted = steady_clock::now();
+
+    for(list<int>::iterator i = list1.begin(); i != list1.end(); ++i)
+        file_l1_sort_rev_sorted << *i << " ";
+    auto duration_reverse_1_sorted = duration_cast<microseconds>(stop_reverse_1_sorted - start_reverse_1_sorted);
+
+    ofstream file_l1_sort_rev_unsorted;
+    file_l1_sort_rev_unsorted.open("Reverse_sort_list1_unsorted.txt");
+
+    auto start_reverse_1_unsorted = steady_clock::now();
+    list3.reverse();
+    auto stop_reverse_1_unsorted = steady_clock::now();
+
+    for(list<int>::iterator i = list3.begin(); i != list3.end(); ++i)
+        file_l1_sort_rev_unsorted << *i << " ";
+    auto duration_reverse_1_unsorted = duration_cast<microseconds>(stop_reverse_1_unsorted - start_reverse_1_unsorted);
+
+
+    ofstream file_l2_sort_rev_sorted;
+    file_l2_sort_rev_sorted.open("Reverse_sort_list2_sorted.txt");
+
+    auto start_reverse_2_sorted = steady_clock::now();
+    list2.reverse();
+    auto stop_reverse_2_sorted = steady_clock::now();
+
+    for(list<int>::iterator i = list2.begin(); i != list2.end(); ++i)
+        file_l2_sort_rev_sorted << *i << " ";
+    auto duration_reverse_2_sorted = duration_cast<microseconds>(stop_reverse_2_sorted - start_reverse_2_sorted);
+
+    ofstream file_l2_sort_rev_unsorted;
+    file_l2_sort_rev_unsorted.open("Reverse_sort_list2_unsorted.txt");
+
+    auto start_reverse_2_unsorted = steady_clock::now();
+    list4.reverse();
+    auto stop_reverse_2_unsorted = steady_clock::now();
+
+    for(list<int>::iterator i = list4.begin(); i != list4.end(); ++i)
+        file_l2_sort_rev_unsorted << *i << " ";
+    auto duration_reverse_2_unsorted  = duration_cast<microseconds>(stop_reverse_2_unsorted - start_reverse_2_unsorted);
+
+
+    ofstream file_lm_clear;
+    file_lm_clear.open("Mergelist12_clear.txt");
+
+    auto start_Mergelist12_clear = steady_clock::now();
+    list52.merge(list51);
+    auto stop_Mergelist12_clear = steady_clock::now();
+
+    for(list<int>::iterator i = list52.begin(); i != list52.end(); ++i)
+            file_lm_clear << *i << " ";
+    auto duration_Mergelist12_clear = duration_cast<microseconds>(stop_Mergelist12_clear - start_Mergelist12_clear);
+
+    ofstream file_lm_rs;
+    file_lm_rs.open("Mergelist12_rv.txt");
+
+    auto start_Mergelist12_rs = steady_clock::now();
+    list1.merge(list2);
+    auto stop_Mergelist12_rs = steady_clock::now();
+
+    for(list<int>::iterator i = list1.begin(); i != list1.end(); ++i)
+        file_lm_rs << *i << " ";
+    auto duration_Mergelist12_rs = duration_cast<microseconds>(stop_Mergelist12_rs - start_Mergelist12_rs);
+
+
+    ofstream file_lm_sort_clear;
+    file_lm_sort_clear.open("Sort_Mergelist12_clear_output.txt");
+
+    auto start_sort_Mergelist12_clear = steady_clock::now();
+    list52.sort();
+    auto stop_sort_Mergelist12_clear = steady_clock::now();
+
+    for(list<int>::iterator i = list52.begin(); i != list52.end(); ++i)
+        file_lm_sort_clear << *i << " ";
+    auto duration_sort_Mergelist12_clear = duration_cast<microseconds>(stop_sort_Mergelist12_clear - start_sort_Mergelist12_clear);
+
+    ofstream file_lm_sort_rv;
+    file_lm_sort_rv.open("Sort_Mergelist12rv_output.txt");
+
+    auto start_sort_Mergelist12_rv = steady_clock::now();
+    list1.sort();
+    auto stop_sort_Mergelist12_rv = steady_clock::now();
+
+    for(list<int>::iterator i = list1.begin(); i != list1.end(); ++i)
+        file_lm_sort_rv << *i << " ";
+    auto duration_sort_Mergelist12_rv = duration_cast<microseconds>(stop_sort_Mergelist12_rv - start_sort_Mergelist12_rv);
+
+
+    ofstream file_lm_rev_rv;
+    file_lm_rev_rv.open("Reverse_Mergelist12CLEAR_output.txt");
+
+    auto start_rev_Mergelist12_rv = steady_clock::now();
+    list52.sort();
+    auto stop_rev_Mergelist12_rv = steady_clock::now();
+
+    for(list<int>::iterator i = list52.begin(); i != list52.end(); ++i)
+        file_lm_rev_rv << *i << " ";
+    auto duration_rev_Mergelist12_rv = duration_cast<microseconds>(stop_rev_Mergelist12_rv - start_rev_Mergelist12_rv);
+
+
+    ofstream file_lm_reverse_rv;
+    file_lm_reverse_rv.open("Reverse_Mergelist12rv_output.txt");
+
+    auto start_r_Mergelist12_rv = steady_clock::now();
+    list1.sort();
+    auto stop_r_Mergelist12_rv = steady_clock::now();
+
+    for(list<int>::iterator i = list1.begin(); i != list1.end(); ++i)
+        file_lm_reverse_rv << *i << " ";
+    auto duration_r_Mergelist12_rv = duration_cast<microseconds>(stop_r_Mergelist12_rv - start_r_Mergelist12_rv);
+
+
+    fstream f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12;
+    ofstream f1out,f2out,f3out,f4out,f5out,f6out,f7out,f8out,f9out,f10out,f11out,f12out;
+    ifstream f1in,f2in,f3in,f4in,f5in,f6in,f7in,f8in,f9in,f10in,f11in,f12in;
+
+
+    f1in.open("T1_Sort_list1_output.txt");
+    f1out.open ("T1_Sort_list1_output.txt",ios::app);
+    if(f1in.is_open())
+        f1out<<duration_sort_L1.count() <<endl;
+
+      f1in.close();
+      f1out.close();
+
+      f2in.open("T2_Sort_list2_output.txt");
+      f2out.open ("T2_Sort_list2_output.txt",ios::app);
+   if(f2in.is_open())
+      f2out<<duration_sort_2.count()<<endl;
+
+      f2in.close();
+      f2out.close();endl
+
+
+      f3in.open("T3_Reverse_sort_list1_sorted.txt");
+      f3out.open ("T3_Reverse_sort_list1_sorted.txt",ios::app);
+   if(f3in.is_open())
+      f3out<<duration_reverse_1_sorted.count()<<endl;
+
+      f1in.close();
+      f1out.close();
+
+
+      f4in.open("T4_Reverse_sort_list1_unsorted.txt");
+      f4out.open ("T4_Reverse_sort_list1_unsorted.txt",ios::app);
+   if(f4in.is_open())
+      f4out<<duration_reverse_1_unsorted.count()<<endl;
+
+      f4in.close();
+      f4out.close();
+
+
+      f5in.open("T5_Reverse_sort_list2_sorted.txt");
+      f5out.open ("T5_Reverse_sort_list2_sorted.txt",ios::app);
+   if(f5in.is_open())
+      f5out<< duration_reverse_2_sorted.count()<<endl;
+
+      f5in.close();
+      f5out.close();
+
+
+      f6in.open("T6_Reverse_sort_list2_unsorted.txt");
+      f6out.open ("T6_Reverse_sort_list2_unsorted.txt",ios::app);
+   if(f6in.is_open())
+      f6out<<duration_reverse_2_unsorted.count()<<endl;
+
+      f6in.close();
+      f6out.close();
+
+
+      f7in.open("T7_Sort_Mergelist12_clear.txt");
+      f7out.open ("T7_Sort_Mergelist12_clear.txt",ios::app);
+   if(f7in.is_open())
+      f7out<<duration_sort_Mergelist12_clear.count()<<endl;
+
+      f7in.close();
+      f7out.close();
+
+
+      f8in.open("T8_Sort_Mergelist12rv.txt");
+      f8out.open ("T8_Sort_Mergelist12rv.txt",ios::app);
+   if(f8in.is_open())
+      f8out<<duration_sort_Mergelist12_rv.count()<<" \n";
+
+      f8in.close();
+      f8out.close();
+
+
+
+      f9in.open("T9_Reverse_Mergelist12CLEAR_output.txt");
+      f9out.open ("T9_Reverse_Mergelist12CLEAR_output.txt",ios::app);
+   if(f9in.is_open())
+      f9out<<duration_rev_Mergelist12_rv.count()<<endl;
+
+      f9in.close();
+      f9out.close();
+
+
+      f10in.open("T10_Reverse_Mergelist12rv_output.txt");
+      f10out.open ("T10_Reverse_Mergelist12rv_output.txt",ios::app);
+   if(f10in.is_open())
+      f10out<<duration_r_Mergelist12_rv.count()<<endl;
+
+      f10in.close();
+      f10out.close();
+
+      f11in.open("T11_Mergelist12_clear.txt");
+      f11out.open ("T11_Mergelist12_clear.txt",ios::app);
+   if(f11in.is_open())
+      f11out<<duration_Mergelist12_clear.count()<<endl;
+
+      f11in.close();
+      f11out.close();
+
+      f12in.open("T12_Mergelist12_rev.txt");
+      f12out.open ("T12_Mergelist12_rev.txt",ios::app);
+   if(f12in.is_open())
+      f12out<<duration_Mergelist12_rs.count()<<endl;
+
+      f12in.close();
+      f12out.close();
+i++;
+    }
+}
