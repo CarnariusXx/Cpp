@@ -1,0 +1,257 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <forward_list>
+#include <chrono>
+#include <numeric>
+#include <string>
+#include <functional>
+
+using namespace std;
+using namespace std::chrono;
+
+int main()
+{
+    forward_list<int>flist;
+    forward_list<int>flist2;
+    forward_list<int>flist3;
+    forward_list<int>flist4;
+    forward_list<int>flist5;
+    forward_list<int>flist6;
+    forward_list<int>flist7;
+    forward_list<int>flist8;
+
+
+    ifstream plik;
+    plik.open( "l1.txt" );
+    if(!plik.good())
+        return false;
+
+    string wiersz;
+    while(getline(plik, wiersz))
+        flist.push_front(stoi(wiersz));
+    plik.close();
+
+    ifstream plik2;
+    plik2.open( "l2.txt" );
+    if( !plik2.good() )
+        return false;
+
+    string wiersz2;
+    while( getline( plik2, wiersz2 ) )
+        flist2.push_front(stoi(wiersz2));
+    plik2.close();
+
+    int sum1 = accumulate(flist.begin(), flist.end(), 0);
+    cout<<"Suma kontrolna 1: "<<sum1<<endl;
+
+    int sum2 = accumulate(flist2.begin(), flist2.end(), 0);
+    cout<< "Suma kontrolna 2: " << sum2 <<endl;
+
+
+
+    ifstream plik3;
+    plik3.open( "l1.txt" );
+    if(!plik3.good())
+        return false;
+
+    string wiersz3;
+    while(getline(plik3, wiersz3))
+        flist3.push_front(stoi(wiersz3));
+    plik3.close();
+
+    ofstream file_f1_sort_pre;
+    file_f1_sort_pre.open("Sort_List1_output_pre.txt");
+    ofstream file_f1_sort_un;
+    file_f1_sort_pre.open("Sort_List1_output_un.txt");
+
+    auto start_sort_1_pre = steady_clock::now();
+    flist.sort();
+    auto stop_sort_1_pre = steady_clock::now();
+
+    auto start_sort_1_un = steady_clock::now();
+    flist3.sort();
+    auto stop_sort_1_un = steady_clock::now();
+
+    for(forward_list<int>::iterator i = flist.begin(); i != flist.end(); ++i)
+        file_f1_sort_pre << *i << " ";
+    for(forward_list<int>::iterator i = flist3.begin(); i != flist3.end(); ++i)
+        file_f1_sort_un << *i << " ";
+
+    cout<<"Time of sorting L1 Pre: "<<endl;
+
+    auto duration_sort_1_pre = duration_cast<microseconds>(stop_sort_1_pre - start_sort_1_pre);
+    cout << duration_sort_1_pre.count() << endl;
+
+    cout<<"Time of sorting L1 UN: "<<endl;
+    auto duration_sort_1_un = duration_cast<microseconds>(stop_sort_1_un - start_sort_1_un);
+    cout << duration_sort_1_un.count() << endl;
+
+    int sumsort1 = accumulate(flist.begin(), flist.end(), 0);
+    cout<<endl<<"Suma kontrolna: "<< sumsort1 << " -" << sum1 << "= " <<sumsort1 - sum1<<endl;
+
+
+    ifstream plik4;
+    plik4.open( "l2.txt" );
+    if( !plik4.good() )
+        return false;
+
+    string wiersz4;
+    while( getline( plik4, wiersz4 ) )
+        flist4.push_front(stoi(wiersz4));
+    plik4.close();
+
+    ofstream file_f2_sort_pre;
+    file_f2_sort_pre.open("Sort_List2_output_PRESORTED.txt");
+    fstream file_f2_sort_un;
+    file_f2_sort_un.open("Sort_List2_output_UNSORTED.txt");
+
+    auto start_sort_2_pre = steady_clock::now();
+    flist2.sort();
+    auto stop_sort_2_pre = steady_clock::now();
+
+    auto start_sort_2_un = steady_clock::now();
+    flist4.sort();
+    auto stop_sort_2_un = steady_clock::now();
+
+    for(forward_list<int>::iterator i = flist2.begin(); i != flist2.end(); ++i)
+        file_f2_sort_pre << *i << " ";
+    auto duration_sort_2_pre = duration_cast<microseconds>(stop_sort_2_pre - start_sort_2_pre);
+
+    for(forward_list<int>::iterator i = flist4.begin(); i != flist4.end(); ++i)
+        file_f2_sort_pre << *i << " ";
+    auto duration_sort_2_un = duration_cast<microseconds>(stop_sort_2_un - start_sort_2_un);
+
+    cout << "duration_sort_2_pre" << endl;
+    cout << duration_sort_2_pre.count() << endl;
+    cout << "duration_sort_2_un" << endl;
+    cout << duration_sort_2_un.count() << endl;
+
+    int sumsort2 = accumulate(flist2.begin(), flist2.end(), 0);
+    cout<<"Suma kontrolna: "<< sumsort2 << " -" << sum2 << "= " <<sumsort2 - sum2<<endl;
+
+        ofstream file_f1_sort_rev_sorted;
+        file_f1_sort_rev_sorted.open("Reverse_sort_List1_sorted.txt");
+
+        auto start_reverse_1_sorted = steady_clock::now();
+        flist.reverse();
+        auto stop_reverse_1_sorted = steady_clock::now();
+
+        for(forward_list<int>::iterator i = flist.begin(); i != flist.end(); ++i)
+            file_f1_sort_rev_sorted << *i << " ";
+        auto duration_reverse_1_sorted = duration_cast<microseconds>(stop_reverse_1_sorted - start_reverse_1_sorted);
+
+        cout << "duration_reverse_1_sorted" << endl;
+        cout << duration_reverse_1_sorted.count() << endl;
+
+    ifstream plik5;
+    plik5.open( "l1.txt" );
+    if(!plik5.good())
+        return false;
+
+    string wiersz5;
+    while(getline(plik5, wiersz5))
+        flist5.push_front(stoi(wiersz5));
+    plik5.close();
+
+        ofstream file_f1_sort_rev_unsorted;
+        file_f1_sort_rev_unsorted.open("Reverse_sort_List1_unsorted.txt");
+
+        auto start_reverse_1_unsorted = steady_clock::now();
+        flist5.reverse();
+        auto stop_reverse_1_unsorted = steady_clock::now();
+
+        for(forward_list<int>::iterator i = flist5.begin(); i != flist5.end(); ++i)
+            file_f1_sort_rev_unsorted << *i << " ";
+        auto duration_reverse_1_unsorted = duration_cast<microseconds>(stop_reverse_1_unsorted - start_reverse_1_unsorted);
+
+        cout << "duration_reverse_1_unsorted"<< endl;
+        cout << duration_reverse_1_unsorted.count() << endl;
+
+
+        ofstream file_f2_sort_rev_sorted;
+        file_f2_sort_rev_sorted.open("Reverse_sort_List2_sorted.txt");
+
+        auto start_reverse_2_sorted = steady_clock::now();
+        flist2.reverse();
+        auto stop_reverse_2_sorted = steady_clock::now();
+
+        for(forward_list<int>::iterator i = flist2.begin(); i != flist2.end(); ++i)
+            file_f2_sort_rev_sorted << *i << " ";
+        auto duration_reverse_2_sorted = duration_cast<microseconds>(stop_reverse_2_sorted - start_reverse_2_sorted);
+
+        cout << "duration_reverse_2_sorted"<< endl;
+        cout << duration_reverse_2_sorted.count() << endl;
+
+    ifstream plik6;
+    plik6.open( "l2.txt" );
+    if(!plik6.good())
+        return false;
+
+    string wiersz6;
+    while(getline(plik6, wiersz6))
+        flist6.push_front(stoi(wiersz6));
+    plik6.close();
+
+        ofstream file_f2_sort_rev_unsorted;
+        file_f2_sort_rev_unsorted.open("Reverse_sort_List2_unsorted.txt");
+
+        auto start_reverse_2_unsorted = steady_clock::now();
+        flist5.reverse();
+        auto stop_reverse_2_unsorted = steady_clock::now();
+
+        for(forward_list<int>::iterator i = flist5.begin(); i != flist5.end(); ++i)
+            file_f2_sort_rev_unsorted << *i << " ";
+        auto duration_reverse_2_unsorted = duration_cast<microseconds>(stop_reverse_2_unsorted - start_reverse_2_unsorted);
+
+        cout << "duration_reverse_2_unsorted" << endl;
+        cout << duration_reverse_2_unsorted.count() << endl;
+
+
+        ofstream out_file_merge12;
+        out_file_merge12.open("MergeList12.txt");
+
+        auto start_MergeList12 = steady_clock::now();
+        flist.merge(flist2);
+        auto stop_MergeList12 = steady_clock::now();
+
+        for(forward_list<int>::iterator i = flist.begin(); i != flist.end(); ++i)
+            out_file_merge12 << *i << " ";
+        auto duration_MergeList12 = duration_cast<microseconds>(stop_MergeList12 - start_MergeList12);
+
+        cout << "duration_MergeList12"<< endl;
+        cout << duration_MergeList12.count() << endl;
+
+
+        ofstream file_f12_sort;
+        file_f12_sort.open("Sort_MergeList12_output.txt");
+
+        auto start_sort_MergeList12 = steady_clock::now();
+        flist.sort();
+        auto stop_sort_MergeList12 = steady_clock::now();
+
+
+        for(forward_list<int>::iterator i = flist.begin(); i != flist.end(); ++i)
+            file_f12_sort << *i << " ";
+        auto duration_sort_MergeList12 = duration_cast<microseconds>(stop_sort_MergeList12 - start_sort_MergeList12);
+
+        cout << "duration_sort_MergeList12" << endl;
+        cout << duration_sort_MergeList12.count() << endl;
+
+
+        ofstream file_f12_sort_rev;
+        file_f12_sort_rev.open("Reverse_Sort_MergeList12_output.txt");
+
+        auto start_reverse_MergeList12 = steady_clock::now();
+        flist.reverse();
+        auto stop_reverse_MergeList12 = steady_clock::now();
+
+        for(forward_list<int>::iterator i = flist.begin(); i != flist.end(); ++i)
+            file_f12_sort_rev << *i << " ";
+        auto duration_reverse_MergeList12 = duration_cast<microseconds>(stop_reverse_MergeList12 - start_reverse_MergeList12);
+
+        cout << "duration_reverse_MergeList12:" << endl;
+        cout << duration_reverse_MergeList12.count() << endl;
+
+    return 0;
+}
