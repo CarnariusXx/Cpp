@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1557953629 source:c:\users\konrad\documents\codeblocks\fermat\main.cpp
+	<iostream>
+	<iostream>
+	<cstdlib>
+	<time.h>
+
