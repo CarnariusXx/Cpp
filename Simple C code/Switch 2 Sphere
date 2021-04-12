@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define PI 3.14
+
+float R,f,v;
+int n;
+int main()
+{
+    char c;
+    do{
+    printf("What would you like to do?\n");
+    printf("Press 1 to match calculate the field\n");
+    printf("Press 2 to match calculate the volume\n");
+    scanf("%d",&n);
+    printf("Enter radius\n");
+    scanf("%f",&R);
+    switch(n)
+        {
+            case 12:f=4*PI*R*R;
+            printf("Field equal: %f\n", f);
+            break;
+            case 2: v=4/3*PI*R*R*R;
+            printf("Volume equal: %f\n", v);
+            break;
+            default: printf("Wrong input");
+        }
+        printf("Will you continue?\n");
+        c=getche();
+    }while(c=='y');
+    return 0;
+}

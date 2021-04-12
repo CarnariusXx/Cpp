@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int absolute(int x)
+{
+    if (x<0) x= -x;
+    return x;
+}
+
+void myAbs(int *x)
+{
+    if (*x<0) *x = -(*x);
+}
+
+int main()
+{
+    printf("Please enter a number: \n");
+    int a;
+    scanf("%i",&a);
+
+
+    //a = absolute(a);
+    myAbs(&a);
+
+    printf("absolute value is: %i\n",a);
+    return 0;
+}

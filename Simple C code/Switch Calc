@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main()
+{
+    int n,a,b,res;
+    char opt;
+    do {
+    printf("What operation would you like to do?\n");
+    printf("Press 1 to addition \n");
+    printf("Press 2 to subtraction \n");
+    printf("Press 3 to multiplication \n");
+    printf("Press 4 to divine \n");
+    printf("Press 5 to modulo \n");
+    scanf("%d",&n);
+    printf("Enter a \n");
+    scanf("%d", &a);
+    printf("Enter b \n");
+    scanf("%d", &b);
+    switch(n)
+    {
+        case 1: res=a+b;
+               printf("Addition is: %d\n", res);
+               break;
+        case 2: res=a-b;
+               printf("Addition is: %d\n", res);
+               break;
+        case 3: res=a*b;
+               printf("Addition is: %d\n", res);
+               break;
+        case 4: res=a/b;
+               printf("Addition is: %d\n", res);
+               break;
+        case 5: res=a%b;
+               printf("Addition is: %d\n", res);
+               break;
+               default: printf("Wrong input\n");
+    }
+     printf("Will you continue?(y/n)\n");
+     opt=getche();
+    }while(opt=='y');
+
+    return 0;
+}

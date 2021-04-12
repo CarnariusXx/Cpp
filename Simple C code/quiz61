@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+
+int dim;
+int* vec;
+
+
+printf("What dimension of the vector? \n");
+
+scanf("%d",&dim);
+if(dim<=0)
+{
+printf("What dimension of the vector?\n");
+}
+
+vec = (int *) calloc(dim, sizeof(int));
+
+if (vec == NULL)
+{
+printf("ERROR: memory allocation was not successful!\n");
+return EXIT_FAILURE;
+}
+
+int i;
+for (i=0; i<dim; i++)
+{
+printf("%d ",i+1);
+scanf("%d",&vec[i]);
+}
+
+
+free(vec);
+
+return 0;
+}

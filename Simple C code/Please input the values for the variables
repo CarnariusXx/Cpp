@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+ float celsius;
+ float fahrenheit;
+
+ float lower, upper, step;
+
+ printf("Please input the values for the variables.\n");
+ printf("lower: ");
+ scanf("%f",&lower);
+ printf("upper: ");
+ scanf("%f",&upper);
+ printf("step: ");
+ scanf("%f",step);
+ if (step <= 0) {
+    printf("ERROR: step size is negative.\n");
+    return 1;
+ }
+ for (fahrenheit = lower; fahrenheit <= upper; fahrenheit += step );
+ celsius = 5 * (fahrenheit-32) / 9;
+ printf("%8.3f\t%8.3\n",fahrenheit,celsius);
+
+ return 0;
+}

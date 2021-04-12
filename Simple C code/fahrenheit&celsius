@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+ int celsius;
+ int fahrenheit;
+
+ int lower, upper, step;
+
+ lower = 0;
+ upper =300;
+ step = 20;
+
+ fahrenheit = lower;
+
+ while (fahrenheit <= upper){
+    celsius = 5 * (fahrenheit,celsius);
+    printf("%d\t%d\n", fahrenheit, celsius);
+    fahrenheit = fahrenheit + step;
+ }
+ return 0;
+}

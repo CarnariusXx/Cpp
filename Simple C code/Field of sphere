@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define PI 3.14
+
+float R, F;
+int main()
+
+{    printf("Enter radius sphere: \n");
+     scanf("%f", &R);
+     F=4*PI*R*R;
+     printf("Field of sphere with radius %f is %f",R,F);
+    return 0;
+}

@@ -1,0 +1,49 @@
+//Eulers Method to solve a differential equation
+#include<iostream>
+#include<iomanip>
+#include<cmath>
+using namespace std;
+
+double df(double y)
+{
+	return pow(y,2) + 1;
+}
+
+double simpleEulerMethod(double h, double y0){
+	return y0 + h*df(y0);
+}
+
+int main()
+{	
+	double intervalMin = 0.0;
+	double intervalMax = 1.01;
+	double h = 0.2;
+	double y = 0.0;
+	
+	for (double h = 0.2; h >= 0.05; h /= 2)
+	{
+		cout << "h:" << h << endl;
+		y = 0;
+		for (double x = intervalMin; x <= intervalMax; x += h)
+		{
+			printf("x: %f\ty: %f\n", x, y);
+			y = simpleEulerMethod(h, y);
+		}
+		cout << endl;
+	}
+
+	cout <<endl << "Exact!!" << endl;
+	double h1 = 0.05;
+	y = 0;
+	for (double x = intervalMin; x <= intervalMax; x += h1)
+	{
+		printf("x: %f\ty: %f\n", x, y);
+		y = tan(x);
+	}
+	cout << endl;
+
+
+
+	system("PAUSE");
+	return 0;
+}

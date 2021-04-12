@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+int main()
+{
+    double u, k, q1, q2, x1, x2, x12;
+    k= 8987551787;
+
+    printf("enter q1: \n");
+    scanf("%lf",&q1);
+    printf("enter q2: \n");
+    scanf("%lf",&q2);
+    printf("enter x1: \n");
+    scanf("%lf",&x1);
+    printf("enter x2: \n");
+    scanf("%lf",&x2);
+
+    x12= x1-x2;
+
+    u=(k*q1*q2)/(x1-x2);
+    printf("your U=%lf",u);
+    return 0;
+}

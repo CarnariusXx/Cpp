@@ -1,0 +1,62 @@
+/* example11-1.c */
+#include <stdlib.h>
+#include <stdio.h>
+
+
+struct person
+{
+	char	given_name[20];
+	char	surname[20];
+	long unsigned	pesel;
+};
+
+void printPerson1(struct person* ptr)
+{
+	printf("Name: %s %s\n", ptr->given_name, ptr->surname);
+	printf("PESEL number: %lu\n", ptr->pesel);
+}
+
+void printPerson2(struct person joe)
+{
+	printf("Name: %s %s\n", joe.given_name, joe.surname);
+	printf("PESEL number: %lu\n", joe.pesel);
+}
+
+
+int main()
+{
+	struct person einstein = {
+		"Albert",
+		"Einstein",
+		790314123
+	};
+
+	printf("Name: %s %s\n",einstein.given_name,einstein.surname);
+	printf("PESEL number: %lu\n", einstein.pesel);
+
+	printf("Let's change some data:\n");
+	printf("%s is getting a new PESEL number\n", einstein.surname);
+	printf("Please enter a new PESEL number: ");
+	scanf("%lu", &einstein.pesel);
+
+	printPerson1(&einstein);
+	printPerson2(einstein);
+
+	printf("Let's do the same again.\n");
+	printf("This time we use some pointers for the struct:\n");
+	struct person *ptr1;
+	ptr1 = &einstein;
+
+	printf("Name: %s %s\n", ptr1->given_name, ptr1->surname);
+	printf("PESEL number: %lu\n", ptr1->pesel);
+
+	printf("Let's change some data:\n");
+	printf("%s is getting a new PESEL number\n", ptr1->surname);
+	printf("Please enter a new PESEL number: ");
+	scanf("%lu", &ptr1->pesel);
+
+	printPerson1(&einstein);
+	printPerson2(einstein);
+
+	return EXIT_SUCCESS;
+}

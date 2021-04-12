@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+      int x, y;
+      printf("Triangle of 9 rows (quiz task)");
+
+      for ( x=0; x<=9; x++ ) {
+            for ( y=0; y<=x; y++ ) {
+                  printf("%3i",y);
+            }
+            printf("\n");
+      }
+      return 0;
+}

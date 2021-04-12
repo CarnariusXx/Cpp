@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+float myRand(float x, float y)
+{
+      int r0 = rand();
+      float r1 = ((float)r0) / ((float)RAND_MAX);
+      float r2 = (y - x) * r1;
+      float r3 = r2 + x;
+      return r3;
+}
+struct particle
+{
+    float    mass;
+    float    x;
+    float    v;
+};
+
+typedef struct particle particle_t;
+
+void printParticle(particle_t* ptr)
+{
+    printf("mass: %f\n", ptr->mass);
+    printf("x: %f\n", ptr->x);
+    printf("v: %f\n", ptr->v);
+}
+void readParticle(particle_t* ptr)
+{
+    printf("Please enter the data for a new particle.\n");
+    printf("mass: ");
+    scanf("%f",&ptr->mass);
+    printf("x: ");
+    scanf("%f",&ptr->x);
+    printf("v: ");
+    scanf("%f",&ptr->v);
+}
+void generateRandomParticle(particle_t* p)
+{
+    p->mass = myRand(0,1000);
+    p->x = myRand(-1000,1000);
+    p->v = myRand(-1000,1000);
+}
+
+float momentum(particle_t* ptr)
+{
+    float p = (ptr->mass) * (ptr->v);
+    return p;
+}
+    int main()
+{
+    srand(time(NULL));
+    int i;
+    int dim = 0;
+    do {
+        printf("How many particles do you want to have? ");
+        scanf("%i",&dim);
+    } while(dim <= 0);
+
+    particle_t* ensemble;
+    ensemble = (particle_t*) malloc(dim*sizeof(particle_t));
+
+    if (ensemble==NULL) {
+        printf("Error!\n");
+        return EXIT_FAILURE;
+    }
+
+    for (i=0; i<dim; i++)
+    {
+        generateRandomParticle(&ensemble[i]);
+    }
+
+    printf("\n\n");
+    printf("Particles have been generated:\n");
+    for (i=0; i<dim; i++)
+    {
+        printParticle(&ensemble[i]);
+    }
+
+    float p;
+    float total_p = 0.0;
+    printf("\n\n");
+    printf("The particles have the momenta:\n");
+    for (i=0; i<dim; i++)
+    {
+        p = momentum(&ensemble[i]);
+        total_p += p;
+    }
+    printf("Total momentum: %10.2f\n",total_p);
+    free(ensemble);
+
+    return EXIT_SUCCESS;
+}

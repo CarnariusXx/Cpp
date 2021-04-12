@@ -1,0 +1,49 @@
+#include<iostream>
+
+using namespace std;
+
+double m = 0.01;
+double g = 9.8;
+double k = 0.0001;
+
+double F(double t, double v)
+{
+	return g - v*v*k / m;
+}
+
+int main()
+{
+	int tmax = 10;
+	double h = 0.2;
+	double g = 9.82;
+	double error = 0.0;
+	double epsilon = 0.00001;
+	double f0, f1, f2, f3, f4, f5;
+	double v = 0.0;
+	double t = 0;
+
+
+	printf("t\t|\t|v\t|\t|h\t|\n");
+	while (t<tmax)
+	{
+		f0 = F(t, v);
+		f1 = F(t + h / 4, v + h*f0 / 4);
+		f2 = F(t + h*(3.0 / 8.0), v + (3.0 / 32.0)*h*f0 + (9.0 / 32.0)*h*f1);
+		f3 = F(t + h*(12.0 / 13.0), v + (1932.0 / 2197.0)*h*f0 - (7200.0 / 2197.0)*h*f1 + (7296.0 / 2197.0)*h*f2);
+		f4 = F(t + h, v + (439.0 / 216.0)*h*f0 - 8 * h*f1 + (3680.0 / 513.0)*h*f2 - (845.0 / 4104.0)*h*f3);
+		f5 = F(t + h / 2, v - (8.0 / 27.0)*h*f0 + 2 * h*f1 - (3544.0 / 2565.0)*h*f2 + (1859.0 / 4104.0)*h*f3 - (11.0 / 40.0)*h*f4);
+		error = h*((1.0 / 360.0)*f0 - (128.0 / 4275.0)*f2 - (2197.0 / 75240.0)*f3 + (1.0 / 50.0)*f4 + (2.0 / 55.0)*f5);
+
+		if (abs(error) <= h*epsilon)
+		{
+			v = v + h*((16.0 / 135.0)*f0 + (6656.0 / 12825.0)*f2 + (28561.0 / 56430.0)*f3 - (9.0 / 50.0)*f4 + (2.0 / 55.0)*f5);
+			t += h;
+		}
+
+		printf("%.6f\t%.6f\t%.6f\n", t, v, h);
+		h = 0.9 * h * pow(abs(h)*epsilon / abs(error), 1.0 / 4.0);
+	}
+
+	cin.get();
+	return 0;
+}

@@ -1,0 +1,46 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+float myRand(float x,float y)
+{
+      int r0 = rand();
+      float r1 = ((float)r0) / ((float)RAND_MAX);
+      float r2 = (y - x) * r1;
+      float r3 = r2 + x;
+      return r3;
+}
+int main()
+{
+    srand(time(NULL));
+    int i;
+    int dim = 0;
+    do {
+        printf("Enter the dimension of the vector: ");
+        scanf("%i",&dim);
+    } while(dim <= 0);
+
+    float* x = (float*) malloc(dim*sizeof(float));
+
+    if (x==NULL) {
+        printf("Error!\n");
+        return EXIT_FAILURE;
+    }
+    for (i=0; i<dim; i++)
+    {
+        x[i] = myRand(1,3);
+    }
+    for (i=0; i<dim; i++)
+    {
+        x[i];
+    }
+    printf("\n\n");
+    printf("Dimension of the vector is:\n");
+    for (i=0; i<dim; i++)
+    {
+        printf("%i  %8.3f\n",i,x[i]);
+    }
+
+    free(x);
+
+    return EXIT_SUCCESS;
+}
