@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <iterator>
+
+using namespace std;
+
+static vector<int> start, target, helper;
+
+
+void display() {
+    cout << "A: ";
+    for (vector<int >::const_iterator iterat = start.begin(); iterat != start.end(); iterat++)
+        cout << *iterat << " ";
+    cout << " | ";
+    cout << "B: ";
+    for (vector<int >::const_iterator iterat = target.begin(); iterat != target.end(); iterat++)
+        cout << *iterat << " ";
+    cout << " | ";
+    cout << "C: ";
+    for (vector<int >::const_iterator iterat = helper.begin(); iterat != helper.end(); iterat++)
+        cout << *iterat << " ";
+    cout << endl;
+}
+
+void Hanoi(vector<int> &start, vector<int> &target, vector<int> &helper, int size) {
+    if (size > 0) {
+        Hanoi(start, helper, target, size - 1);
+        target.push_back(start.back());
+        start.pop_back();
+        display();
+        Hanoi(helper, target, start, size - 1);
+     }
+}
+
+int main() {
+
+    setlocale(LC_ALL,"");
+    int n;
+    cout << "Ile krążków przenieść ";
+    cin >> n;
+    int licz = n;
+
+    for (int i = 0; i < n; i++) {
+        start.push_back(licz);
+    licz--;
+    }
+    display();
+    Hanoi(start,target,helper,n);
+}
