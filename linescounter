@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+
+using namespace std;
+
+void read(string file_name, vector<string> &string_vector)
+{
+    ifstream in (file_name);
+    string string1;
+    while (getline(in, string1))
+    {
+        if(string1.size() > 0)
+        {
+            string_vector.push_back(string1);
+        }
+    }
+
+}
+
+int main() {
+    vector<string> string_vector;
+    read("test.txt",string_vector);
+    cout<<string_vector.size();
+    return 0;
+}
