@@ -1,0 +1,214 @@
+#include <iostream>
+#include <map>
+#include <unordered_map>
+#include <regex>
+#include <string>
+#include <vector>
+#include <fstream>
+#include<bits/stdc++.h>
+#include <sstream>
+
+using namespace std;
+
+fstream file_in("in.txt");
+fstream file_out("out.txt");
+
+vector<string> vector1{};
+vector<string> vector2{};
+
+string str{};
+stringstream ss;
+
+map<string,int> m { {"12b45a789012",1},{"246810121416",2},{"391215182123",3},{"481216202426",4},{"201987654321",5},{"614121018642",6},{"321281512193",7},{"624202612184",8}, };
+
+
+int main()
+{
+    const regex pattern{"[0-9]+\.[0-9a-z]{12,12}\.[0-9a-z]{12,12}.[0-9*]{1,3}"};
+
+    const regex pattern1{"[0-9]+\.12b45a789012\.[0-9a-z]{12,12}.[0-9*]{1,3}"};
+    const regex pattern2{"[0-9]+\.246810121416\.[0-9a-z]{12,12}.[0-9*]{1,3}"};
+    const regex pattern3{"[0-9]+\.391215182123\.[0-9a-z]{12,12}.[0-9*]{1,3}"};
+    const regex pattern4{"[0-9]+\.481216202426\.[0-9a-z]{12,12}.[0-9*]{1,3}"};
+    const regex pattern5{"[0-9]+\.201987654321\.[0-9a-z]{12,12}.[0-9*]{1,3}"};
+    const regex pattern6{"[0-9]+\.614121018642\.[0-9a-z]{12,12}.[0-9*]{1,3}"};
+    const regex pattern7{"[0-9]+\.321281512193\.[0-9a-z]{12,12}.[0-9*]{1,3}"};
+    const regex pattern8{"[0-9]+\.624202612184\.[0-9a-z]{12,12}.[0-9*]{1,3}"};
+
+    const regex pattern11{"[0-9]+\.[0-9a-z]{12,12}\.12b45a789012.[0-9*]{1,3}"};
+    const regex pattern22{"[0-9]+\.[0-9a-z]{12,12}\.246810121416.[0-9*]{1,3}"};
+    const regex pattern33{"[0-9]+\.[0-9a-z]{12,12}\.391215182123.[0-9*]{1,3}"};
+    const regex pattern44{"[0-9]+\.[0-9a-z]{12,12}\.481216202426.[0-9*]{1,3}"};
+    const regex pattern55{"[0-9]+\.[0-9a-z]{12,12}\.201987654321.[0-9*]{1,3}"};
+    const regex pattern66{"[0-9]+\.[0-9a-z]{12,12}\.614121018642.[0-9*]{1,3}"};
+    const regex pattern77{"[0-9]+\.[0-9a-z]{12,12}\.321281512193.[0-9*]{1,3}"};
+    const regex pattern88{"[0-9]+\.[0-9a-z]{12,12}\.624202612184.[0-9*]{1,3}"};
+
+    int p1 = 0;
+    int p2 = 0;
+    int p3 = 0;
+    int p4 = 0;
+    int p5 = 0;
+    int p6 = 0;
+    int p7 = 0;
+    int p8 = 0;
+    int aging = 7;
+    int a1 = 0;
+    int a2 = 0;
+    int a3 = 0;
+    int a4 = 0;
+    int a5 = 0;
+    int a6 = 0;
+    int a7 = 0;
+    int a8 = 0;
+
+    cout << "Aging: "<<aging<<endl;
+    while(getline(file_in, str))
+    {
+        if (regex_match(str, pattern))
+        {
+            vector1.push_back(str);
+        }
+    }
+
+    cout<<"Vector: "<<endl;
+
+    for (auto& e : vector1)
+    {
+        cout << e << "\n";
+    }
+
+    cout<<"p1: "<<p1<<endl<<"p2: "<<p2<<endl<<"p3: "<<p3<<endl<<"p4: "<<p4<<endl<<"p5: "<<p5<<endl<<"p6: "<<p6<<endl<<"p7: "<<p7<<endl<<"p8: "<<p8<<endl;
+    for(int i = 0; i<vector1.size();++i)
+    {
+        if(a1==aging){a1=0;p1=0;}
+        if(a2==aging){a2=0;p2=0;}
+        if(a3==aging){a3=0;p3=0;}
+        if(a4==aging){a4=0;p4=0;}
+        if(a5==aging){a5=0;p5=0;}
+        if(a6==aging){a6=0;p6=0;}
+        if(a7==aging){a7=0;p7=0;}
+        if(a8==aging){a8=0;p8=0;}
+             if(regex_match(vector1[i],pattern1))
+                {
+                  a1 = 0; a2 += 1; a3 += 1; a4 += 1; a5 += 1; a6 += 1; a7 += 1; a8 += 1;
+                  if(regex_match(vector1[i],pattern11)){if(p1!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("1"));}}
+                  if(regex_match(vector1[i],pattern22)){if(p2!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("2"));}}
+                  if(regex_match(vector1[i],pattern33)){if(p3!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("3"));}}
+                  if(regex_match(vector1[i],pattern44)){if(p4!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("4"));}}
+                  if(regex_match(vector1[i],pattern55)){if(p5!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("5"));}}
+                  if(regex_match(vector1[i],pattern66)){if(p6!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("6"));}}
+                  if(regex_match(vector1[i],pattern77)){if(p7!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("7"));}}
+                  if(regex_match(vector1[i],pattern88)){if(p8!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("8"));}}
+                p1 += 1;
+                }
+
+        else if(regex_match(vector1[i],pattern2))
+                {
+                    a1 += 1; a2 = 0; a3 += 1; a4 += 1; a5 += 1; a6 += 1; a7 += 1; a8 += 1;
+
+                    if(regex_match(vector1[i],pattern11)){if(p1!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("1"));}}
+                  if(regex_match(vector1[i],pattern22)){if(p2!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("2"));}}
+                  if(regex_match(vector1[i],pattern33)){if(p3!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("3"));}}
+                  if(regex_match(vector1[i],pattern44)){if(p4!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("4"));}}
+                  if(regex_match(vector1[i],pattern55)){if(p5!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("5"));}}
+                  if(regex_match(vector1[i],pattern66)){if(p6!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("6"));}}
+                  if(regex_match(vector1[i],pattern77)){if(p7!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("7"));}}
+                  if(regex_match(vector1[i],pattern88)){if(p8!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("8"));}}
+                p2 += 1;
+    }
+        else if(regex_match(vector1[i],pattern3))
+                {   a1 += 1; a2 += 1; a3 = 0; a4 += 1; a5 += 1; a6 += 1; a7 += 1; a8 += 1;
+                    if(regex_match(vector1[i],pattern11)){if(p1!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("1"));}}
+                  if(regex_match(vector1[i],pattern22)){if(p2!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("2"));}}
+                  if(regex_match(vector1[i],pattern33)){if(p3!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("3"));}}
+                  if(regex_match(vector1[i],pattern44)){if(p4!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("4"));}}
+                  if(regex_match(vector1[i],pattern55)){if(p5!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("5"));}}
+                  if(regex_match(vector1[i],pattern66)){if(p6!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("6"));}}
+                  if(regex_match(vector1[i],pattern77)){if(p7!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("7"));}}
+                  if(regex_match(vector1[i],pattern88)){if(p8!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("8"));}}
+                p3 += 1;
+    }
+        else if(regex_match(vector1[i],pattern4))
+                {   a1 += 1; a2 += 1; a3 += 1; a4 = 0; a5 += 1; a6 += 1; a7 += 1; a8 += 1;
+                    if(regex_match(vector1[i],pattern11)){if(p1!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("1"));}}
+                  if(regex_match(vector1[i],pattern22)){if(p2!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("2"));}}
+                  if(regex_match(vector1[i],pattern33)){if(p3!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("3"));}}
+                  if(regex_match(vector1[i],pattern44)){if(p4!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("4"));}}
+                  if(regex_match(vector1[i],pattern55)){if(p5!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("5"));}}
+                  if(regex_match(vector1[i],pattern66)){if(p6!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("6"));}}
+                  if(regex_match(vector1[i],pattern77)){if(p7!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("7"));}}
+                  if(regex_match(vector1[i],pattern88)){if(p8!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("8"));}}
+               p4 += 1;
+    }
+        else if(regex_match(vector1[i],pattern5))
+                {
+                    a1 += 1; a2 += 1; a3 += 1; a4 += 1; a5 = 0; a6 += 1; a7 += 1; a8 += 1;
+                    if(regex_match(vector1[i],pattern11)){if(p1!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("1"));}}
+                  if(regex_match(vector1[i],pattern22)){if(p2!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("2"));}}
+                  if(regex_match(vector1[i],pattern33)){if(p3!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("3"));}}
+                  if(regex_match(vector1[i],pattern44)){if(p4!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("4"));}}
+                  if(regex_match(vector1[i],pattern55)){if(p5!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("5"));}}
+                  if(regex_match(vector1[i],pattern66)){if(p6!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("6"));}}
+                  if(regex_match(vector1[i],pattern77)){if(p7!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("7"));}}
+                  if(regex_match(vector1[i],pattern88)){if(p8!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("8"));}}
+               p5 += 1;
+    }
+        else if(regex_match(vector1[i],pattern6))
+                {
+                    a1 += 1; a2 += 1; a3 += 1; a4 += 1; a5 += 1; a6 = 0; a7 += 1; a8 += 1;
+                    if(regex_match(vector1[i],pattern11)){if(p1!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("1"));}}
+                  if(regex_match(vector1[i],pattern22)){if(p2!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("2"));}}
+                  if(regex_match(vector1[i],pattern33)){if(p3!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("3"));}}
+                  if(regex_match(vector1[i],pattern44)){if(p4!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("4"));}}
+                  if(regex_match(vector1[i],pattern55)){if(p5!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("5"));}}
+                  if(regex_match(vector1[i],pattern66)){if(p6!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("6"));}}
+                  if(regex_match(vector1[i],pattern77)){if(p7!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("7"));}}
+                  if(regex_match(vector1[i],pattern88)){if(p8!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("8"));}}
+               p6 += 1;
+    }
+        else if(regex_match(vector1[i],pattern7))
+                {
+                    a1 += 1; a2 += 1; a3 += 1; a4 += 1; a5 += 1; a6 += 1; a7 = 0; a8 += 1;
+                    if(regex_match(vector1[i],pattern11)){if(p1!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("1"));}}
+                  if(regex_match(vector1[i],pattern22)){if(p2!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("2"));}}
+                  if(regex_match(vector1[i],pattern33)){if(p3!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("3"));}}
+                  if(regex_match(vector1[i],pattern44)){if(p4!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("4"));}}
+                  if(regex_match(vector1[i],pattern55)){if(p5!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("5"));}}
+                  if(regex_match(vector1[i],pattern66)){if(p6!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("6"));}}
+                  if(regex_match(vector1[i],pattern77)){if(p7!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("7"));}}
+                  if(regex_match(vector1[i],pattern88)){if(p8!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("8"));}}
+               p7 += 1;
+    }
+        else if(regex_match(vector1[i],pattern8))
+                {
+                    a1 += 1; a2 += 1; a3 += 1; a3 += 1; a4 += 1; a5 += 1; a6 += 1; a7 += 1; a8 = 0;
+                    if(regex_match(vector1[i],pattern11)){if(p1!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("1"));}}
+                  if(regex_match(vector1[i],pattern22)){if(p2!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("2"));}}
+                  if(regex_match(vector1[i],pattern33)){if(p3!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("3"));}}
+                  if(regex_match(vector1[i],pattern44)){if(p4!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("4"));}}
+                  if(regex_match(vector1[i],pattern55)){if(p5!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("5"));}}
+                  if(regex_match(vector1[i],pattern66)){if(p6!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("6"));}}
+                  if(regex_match(vector1[i],pattern77)){if(p7!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("7"));}}
+                  if(regex_match(vector1[i],pattern88)){if(p8!=1){vector1[i].pop_back(); vector2.push_back(vector1[i].append("*"));}else{vector1[i].pop_back(); vector2.push_back(vector1[i].append("8"));}}
+               p8 += 1;
+               }
+                cout<<"a1: "<<a1<<"\t"<<"a2: "<<a2<<"\t"<<"a3: "<<a3<<"\t"<<"a4: "<<a4<<"\t"<<"a5: "<<a5<<"\t"<<"a6: "<<a6<<"\t"<<"a7: "<<a7<<"\t"<<"a8: "<<a8<<endl;
+              // cout<<"p1: "<<p1<<endl<<"p2: "<<p2<<endl<<"p3: "<<p3<<endl<<"p4: "<<p4<<endl<<"p5: "<<p5<<endl<<"p6: "<<p6<<endl<<"p7: "<<p7<<endl<<"p8: "<<p8<<endl;
+
+    }
+    //cout<<"Vector: "<<endl;
+
+    for (auto& c : vector2)
+    {
+        cout << c << "\n";
+    }
+
+    //cout<<"p1: "<<p1<<endl<<"p2: "<<p2<<endl<<"p3: "<<p3<<endl<<"p4: "<<p4<<endl<<"p5: "<<p5<<endl<<"p6: "<<p6<<endl<<"p7: "<<p7<<endl<<"p8: "<<p8<<endl;
+   // cout<<"a1: "<<a1<<endl<<"a2: "<<a2<<endl<<"a3: "<<a3<<endl<<"a4: "<<a4<<endl<<"a5: "<<a5<<endl<<"a6: "<<a6<<endl<<"a7: "<<a7<<endl<<"a8: "<<a8<<endl;
+
+    for(int i = 0; i<vector2.size(); ++i)
+    {
+        file_out<<vector2[i]<<endl;
+    }
+}
