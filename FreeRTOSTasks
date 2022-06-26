@@ -1,0 +1,177 @@
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "timers.h"
+#include <math.h>
+#include "xtmrctr.h"
+#include "xil_printf.h"
+#include "xparameters.h"
+#include "stdio.h"
+
+#define TIMER_ID	1
+#define DELAY_10_SECONDS	10000UL
+#define DELAY_1_SECOND		1000UL
+#define TIMER_CHECK_THRESHOLD	9
+
+XTmrCtr globTimerInstance;
+
+TaskHandle_t MainTaskHandler = NULL;
+TaskHandle_t myTask1Handler = NULL;
+TaskHandle_t myTask2Handler = NULL;
+TaskHandle_t myTask3Handler = NULL;
+TaskHandle_t StandaloneTaskHandler = NULL;
+
+
+void printDouble8(double fval) {
+   int integerPart, fractionalPart;
+   if (fval>INT32_MAX || fval<= INT32_MIN) {
+      xil_printf("XXX.XXXXXXXX");
+      return;
+   }
+   integerPart = fval;
+   fractionalPart = (fval - integerPart) * 100000000;
+   xil_printf("%d.%08d", integerPart, fractionalPart);
+}
+
+double sum = 0;
+double M = 1000000;
+double q = M_PI/2; //MW
+int TaksNumber = 3;
+
+double result_task1 = 0;
+double result_task2 = 0;
+double result_task3 = 0;
+
+
+void myTask1(void *p)
+{
+	portTASK_USES_FLOATING_POINT();
+	int N = (int)M/TaksNumber;
+	int nrT = 0;
+	int start_point = 1+(nrT*N);
+	int end_point = N*(1+nrT);
+
+	    for(int i = start_point; i <= end_point;++i)
+			{
+			result_task1 += ((sin(q*i))/i);
+			}
+	xTaskNotifyGive(MainTaskHandler);
+	vTaskDelete(myTask1Handler);
+}
+
+void myTask2(void *p)
+{
+	portTASK_USES_FLOATING_POINT();
+	int N = (int)M/TaksNumber;
+	int nrT = 1;
+	int start_point = 1+(nrT*N);
+	int end_point = N*(1+nrT);
+
+		for(int i = start_point; i <= end_point;++i) 
+		{
+			result_task2 += ((sin(q*i))/i);
+		}
+		xTaskNotifyGive(MainTaskHandler);
+		vTaskDelete(myTask2Handler);
+}
+
+void myTask3(void *p)
+{
+	portTASK_USES_FLOATING_POINT();
+	int N = (int)M/TaksNumber;
+	int nrT = 2;
+	int start_point = 1+(nrT*N);
+	int end_point = N*(1+nrT);
+
+		for(int i = start_point; i <= end_point;++i)
+		{
+			result_task3 += ((sin(q*i))/i);
+		}
+		xTaskNotifyGive(MainTaskHandler);
+		vTaskDelete(myTask3Handler);
+}
+
+double sum_standalone=0.0;
+void StandaloneTask(void *p)
+{
+	portTASK_USES_FLOATING_POINT();
+	ulTaskNotifyTake( pdTRUE, portMAX_DELAY );
+	u32 start_time = XTmrCtr_GetValue(&globTimerInstance, 0);
+		int start_idx=1;
+		int end_idx=M;
+		for(int i = start_idx; i < end_idx;++i)
+		{
+			sum_standalone += ((sin(q*i))/i);
+		}
+	u32 stop_time = XTmrCtr_GetValue(&globTimerInstance, 0);
+	double time = 1.0*(stop_time-start_time)/(50000);
+	xil_printf("\r\n");
+	xil_printf("StandaloneTask: \r\n");
+	printDouble8(time);
+	xil_printf(" sum="); printDouble8(sum_standalone); xil_printf("\n\r");
+	xil_printf("\r\n");
+
+		vTaskDelete(StandaloneTaskHandler);
+
+}
+
+void MainTask(void *p)
+{
+	portTASK_USES_FLOATING_POINT();
+	double time = 0;
+	double result_all = 0;
+	u32 start_time = XTmrCtr_GetValue(&globTimerInstance, 0); 
+	xTaskCreate( myTask1,"myTask1",configMINIMAL_STACK_SIZE+100,NULL,tskIDLE_PRIORITY+1,&myTask1Handler);
+	xTaskCreate( myTask2,"myTask2",configMINIMAL_STACK_SIZE+100,NULL,tskIDLE_PRIORITY+1,&myTask2Handler);
+	xTaskCreate( myTask3,"myTask3",configMINIMAL_STACK_SIZE+100,NULL,tskIDLE_PRIORITY+1,&myTask3Handler);
+	for (int i=0; i<3; i++) {
+			ulTaskNotifyTake( pdFALSE, portMAX_DELAY );
+	}
+	result_all = result_task1 + result_task2 + result_task3;
+	int stop_time = XTmrCtr_GetValue(&globTimerInstance, 0);
+	time = 1.0*(stop_time-start_time)/(50000);
+	xil_printf("\r\n");
+	xil_printf("Obliczenia wielowatkowe:");
+	xil_printf("\r\n");
+	printDouble8(time);
+	xil_printf(" sum="); printDouble8(result_all); xil_printf("\n\r");
+	vTaskDelay(1);
+
+	xTaskNotifyGive(StandaloneTaskHandler);
+	vTaskDelete(MainTaskHandler); 
+}
+
+double sum_main=0.0; 
+int main( void )
+	{
+		int Status = XTmrCtr_Initialize(&globTimerInstance, XPAR_AXI_TIMER_0_DEVICE_ID);
+		if (Status != XST_SUCCESS) {
+		xil_printf("Timer initialization failure\r\n");
+		} else {
+		}
+		XTmrCtr_SetOptions(&globTimerInstance, 0, XTC_AUTO_RELOAD_OPTION);
+		XTmrCtr_SetResetValue(&globTimerInstance, 0,0);
+		XTmrCtr_Reset(&globTimerInstance, 0);
+		XTmrCtr_Start(&globTimerInstance, 0);
+		XTmrCtr_Reset(&globTimerInstance, 0);
+		XTmrCtr_Start(&globTimerInstance, 0);
+		u32 start_time = XTmrCtr_GetValue(&globTimerInstance, 0); 
+		int start_idx=1; 
+		int end_idx=M; 
+		for(int i = start_idx ; i < end_idx; ++i)
+		{
+			sum_main += ((sin(q*i))/i);
+		}
+		u32 end_time = XTmrCtr_GetValue(&globTimerInstance, 0);
+		xil_printf("\r\n");
+				xil_printf("\rObliczenia w main:");
+		xil_printf("\r\n");
+		printDouble8(1.0*(end_time-start_time)/(50000));
+		xil_printf(" sum="); printDouble8(sum_main); xil_printf("\n\r"); //MW
+		xTaskCreate( MainTask,"MainTask",configMINIMAL_STACK_SIZE+100,NULL,1,&MainTaskHandler);
+		xTaskCreate( StandaloneTask,"StandaloneTask",configMINIMAL_STACK_SIZE+100,NULL,1,&StandaloneTaskHandler);
+		vTaskStartScheduler();
+
+
+
+}
